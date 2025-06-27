@@ -21,9 +21,11 @@ export default function Home() {
       }
     >
       <View>
-        <Text>Home</Text>
         <Pressable onPress={() => setWeightVisible(true)}>
-          <Text>Modal</Text>
+          <Text>Weight</Text>
+        </Pressable>
+        <Pressable onPress={() => setTimeVisible(true)}>
+          <Text>Time</Text>
         </Pressable>
         <InputModal
           visible={weightVisible}
@@ -31,7 +33,25 @@ export default function Home() {
           number={weight}
           setNumber={setWeight}
         >
-          <Text>instructions</Text>
+          <View>
+            <Text style={styles.inputHeader}>Pasta weight</Text>
+            <Text style={styles.inputText}>
+              Set the weight in oz of the pasta you want to cook
+            </Text>
+          </View>
+        </InputModal>
+        <InputModal
+          visible={timeVisible}
+          setVisible={setTimeVisible}
+          number={time}
+          setNumber={setTime}
+        >
+          <View>
+            <Text style={styles.inputHeader}>Cook Time</Text>
+            <Text style={styles.inputText}>
+              Set the cook time from the package of the pasta
+            </Text>
+          </View>
         </InputModal>
       </View>
     </ParallaxScrollView>
@@ -45,5 +65,14 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: "absolute",
+  },
+  inputHeader: {
+    fontWeight: 600,
+    fontSize: 22,
+    paddingBottom: 20,
+  },
+  inputText: {
+    fontSize: 18,
+    paddingBottom: 20,
   },
 });

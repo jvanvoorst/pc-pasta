@@ -8,15 +8,21 @@ type Props = {
 };
 
 export default function NumberPicker({ number, setNumber }: Props) {
+  // number should not go below 0
+  const deprecateNumber = () => (number > 0 ? number - 1 : number);
+
   return (
     <View style={styles.container}>
       <Pressable style={styles.button} onPress={() => setNumber(number + 1)}>
         <FontAwesome size={28} name="plus" color={"red"} />
       </Pressable>
       <View style={styles.number}>
-        <Text>{number}</Text>
+        <Text style={styles.numberText}>{number}</Text>
       </View>
-      <Pressable style={styles.button} onPress={() => setNumber(number - 1)}>
+      <Pressable
+        style={styles.button}
+        onPress={() => setNumber(deprecateNumber())}
+      >
         <FontAwesome size={28} name="minus" color={"red"} />
       </Pressable>
     </View>
@@ -27,8 +33,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    height: 50,
-    width: 200,
+    height: "25%",
+    width: "100%",
     borderStyle: "solid",
     borderWidth: 2,
     borderRadius: 4,
@@ -40,5 +46,8 @@ const styles = StyleSheet.create({
   number: {
     flex: 2,
     alignItems: "center",
+  },
+  numberText: {
+    fontSize: 28,
   },
 });

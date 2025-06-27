@@ -17,13 +17,13 @@ export default function InputModal({
   setNumber,
 }: Props) {
   return (
-    <Modal visible={visible} transparent={true}>
+    <Modal visible={visible} transparent={true} animationType="slide">
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Text>{children}</Text>
+          {children}
           <NumberPicker number={number} setNumber={setNumber} />
           <Pressable style={styles.button} onPress={() => setVisible(!visible)}>
-            <Text>Set</Text>
+            <Text style={styles.buttonText}>Set</Text>
           </Pressable>
         </View>
       </View>
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalView: {
+    height: 350,
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
@@ -50,12 +51,14 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
   },
   button: {
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 10,
-    elevation: 2,
-    // backgroundColor: "light-blue",
+    backgroundColor: "blue",
+    marginTop: 30,
+  },
+  buttonText: {
+    fontSize: 20,
   },
 });
