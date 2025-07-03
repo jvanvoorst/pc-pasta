@@ -2,6 +2,7 @@ import { Image } from "expo-image";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import InputModal from "@/components/ui/InputModal";
+import NumberPicker from "@/components/ui/NumberPicker";
 import ParallaxScrollView from "@/components/ui/ParallaxScrollView";
 import { useState } from "react";
 
@@ -38,6 +39,7 @@ export default function Home() {
             <Text style={styles.inputText}>
               Set the weight in oz of the pasta you want to cook
             </Text>
+            <NumberPicker number={weight} setNumber={setWeight} />
           </View>
         </InputModal>
         <InputModal
@@ -51,6 +53,7 @@ export default function Home() {
             <Text style={styles.inputText}>
               Set the cook time from the package of the pasta
             </Text>
+            <NumberPicker number={time} setNumber={setTime} />
           </View>
         </InputModal>
       </View>

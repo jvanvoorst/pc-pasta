@@ -1,6 +1,5 @@
 import type { Dispatch, PropsWithChildren, SetStateAction } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import NumberPicker from "./NumberPicker";
 
 type Props = PropsWithChildren<{
   visible: boolean;
@@ -9,19 +8,12 @@ type Props = PropsWithChildren<{
   setNumber: Dispatch<SetStateAction<number>>;
 }>;
 
-export default function InputModal({
-  children,
-  visible,
-  setVisible,
-  number,
-  setNumber,
-}: Props) {
+export default function InputModal({ children, visible, setVisible }: Props) {
   return (
     <Modal visible={visible} transparent={true} animationType="slide">
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           {children}
-          <NumberPicker number={number} setNumber={setNumber} />
           <Pressable style={styles.button} onPress={() => setVisible(!visible)}>
             <Text style={styles.buttonText}>Set</Text>
           </Pressable>
@@ -60,5 +52,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 20,
+    color: "white",
   },
 });

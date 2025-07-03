@@ -13,17 +13,18 @@ export default function NumberPicker({ number, setNumber }: Props) {
 
   return (
     <View style={styles.container}>
-      <Pressable style={styles.button} onPress={() => setNumber(number + 1)}>
-        <FontAwesome size={28} name="plus" color={"red"} />
-      </Pressable>
-      <View style={styles.number}>
-        <Text style={styles.numberText}>{number}</Text>
-      </View>
       <Pressable
         style={styles.button}
         onPress={() => setNumber(deprecateNumber())}
       >
-        <FontAwesome size={28} name="minus" color={"red"} />
+        <FontAwesome size={28} name="minus" color={"blue"} />
+      </Pressable>
+      <View style={styles.number}>
+        <Text style={styles.numberText}>{number}</Text>
+      </View>
+
+      <Pressable style={styles.button} onPress={() => setNumber(number + 1)}>
+        <FontAwesome size={28} name="plus" color={"blue"} />
       </Pressable>
     </View>
   );

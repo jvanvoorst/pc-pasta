@@ -1,3 +1,10 @@
+/**
+ * Calculate the amount of water needed
+ *
+ * @export
+ * @param {number} weight
+ * @returns {*}
+ */
 export function calculateWater(weight: number) {
   const waterPerOz = 0.25;
   const water = weight * waterPerOz;
@@ -34,6 +41,14 @@ export function calculateWater(weight: number) {
   return returnValue.trim();
 }
 
+/**
+ * Calculate the cooking time
+ *
+ * @export
+ * @param {number} low
+ * @param {(number | null)} high
+ * @returns {number}
+ */
 export function calculateTime(low: number, high: number | null) {
   let calculationNumber = 0;
 
