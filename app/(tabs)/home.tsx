@@ -1,16 +1,20 @@
-import { Image } from "expo-image";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import "@/css/global.css";
 
 import InputModal from "@/components/ui/InputModal";
 import NumberPicker from "@/components/ui/NumberPicker";
 import ParallaxScrollView from "@/components/ui/ParallaxScrollView";
+import { Image } from "expo-image";
+import { verifyInstallation } from "nativewind";
 import { useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export default function Home() {
   const [weightVisible, setWeightVisible] = useState(false);
   const [timeVisible, setTimeVisible] = useState(false);
   const [weight, setWeight] = useState(0);
   const [time, setTime] = useState(0);
+
+  verifyInstallation();
 
   return (
     <ParallaxScrollView
@@ -28,6 +32,11 @@ export default function Home() {
         <Pressable onPress={() => setTimeVisible(true)}>
           <Text>Time</Text>
         </Pressable>
+        <View className="flex-1 items-center justify-center bg-white">
+          <Text className="text-xl font-bold text-blue-500">
+            Welcome to Nativewind!
+          </Text>
+        </View>
         <InputModal
           visible={weightVisible}
           setVisible={setWeightVisible}
