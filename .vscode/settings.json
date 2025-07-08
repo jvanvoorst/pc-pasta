@@ -8,5 +8,14 @@
     "class",
     "className",
     "headerClassName"
+  ],
+  "tailwindCSS.experimental.classRegex": [
+    ["tva\\((([^()]*|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ],
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "cSpell.words": [
+    "gluestack"
   ]
 }

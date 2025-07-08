@@ -4,12 +4,16 @@
     "slug": "pc_pasta",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/adaptive-icon.png",
     "scheme": "pcpasta",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "pc-pasta",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -43,6 +47,7 @@
       "eas": {
         "projectId": "cf226058-5451-46d5-8a40-dbac9b55b0b8"
       }
-    }
+    },
+    "owner": "jvanvoorst"
   }
 }
