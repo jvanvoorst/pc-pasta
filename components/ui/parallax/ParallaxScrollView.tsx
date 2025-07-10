@@ -1,5 +1,5 @@
 import type { PropsWithChildren, ReactElement } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -7,15 +7,20 @@ import Animated, {
   useScrollViewOffset,
 } from "react-native-reanimated";
 
-import { useBottomTabOverflow } from "@/components/ui/TabBarBackground";
+import { useBottomTabOverflow } from "@/components/ui/parallax/TabBarBackground";
 
 const HEADER_HEIGHT = 250;
 
 type Props = PropsWithChildren<{
   headerImage: ReactElement;
+  className: string;
 }>;
 
-export default function ParallaxScrollView({ children, headerImage }: Props) {
+export default function ParallaxScrollView({
+  children,
+  headerImage,
+  className,
+}: Props) {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
   const bottom = useBottomTabOverflow();
@@ -41,34 +46,21 @@ export default function ParallaxScrollView({ children, headerImage }: Props) {
   });
 
   return (
-    <View style={styles.container}>
+    <View className={`flex-1 ${className}`}>
       <Animated.ScrollView
         ref={scrollRef}
         scrollEventThrottle={16}
         scrollIndicatorInsets={{ bottom }}
         contentContainerStyle={{ paddingBottom: bottom }}
       >
-        <Animated.View style={[styles.header, headerAnimatedStyle]}>
+        <Animated.View
+          style={headerAnimatedStyle}
+          className={`h-[${HEADER_HEIGHT}] overflow-hidden`}
+        >
           {headerImage}
         </Animated.View>
-        <View style={styles.content}>{children}</View>
+        <View className="flex-1 p-8 overflow-hidden">{children}</View>
       </Animated.ScrollView>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    height: HEADER_HEIGHT,
-    overflow: "hidden",
-  },
-  content: {
-    flex: 1,
-    padding: 32,
-    gap: 16,
-    overflow: "hidden",
-  },
-});

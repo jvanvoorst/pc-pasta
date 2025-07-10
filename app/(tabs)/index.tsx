@@ -1,68 +1,130 @@
-import InputModal from "@/components/InputModal";
-import ParallaxScrollView from "@/components/ui/ParallaxScrollView";
+import TimeModal from "@/components/custom/TimeModal";
+import WeightModal from "@/components/custom/WeightModal";
+import { Button, ButtonText } from "@/components/ui/button";
+import { Heading } from "@/components/ui/heading";
+import { Image } from "@/components/ui/image";
+import ParallaxScrollView from "@/components/ui/parallax/ParallaxScrollView";
 import "@/css/global.css";
-import { Image } from "expo-image";
+import { formatInputTime, formatInstructions } from "@/scripts/calculations";
 import { useState } from "react";
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Text, View } from "react-native";
 
 export default function Home() {
-  const [weightVisible, setWeightVisible] = useState(false);
-  const [timeVisible, setTimeVisible] = useState(false);
-  const [weight, setWeight] = useState(0);
-  const [time, setTime] = useState(0);
+  // modal visibility
+  const [inputWeightVisible, setInputWeightVisible] = useState(false);
+  const [inputTimeVisible, setInputTimeVisible] = useState(false);
+
+  // user inputs
+  const [inputWeight, setInputWeight] = useState(0);
+  const [inputTimeLow, setInputTimeLow] = useState(0);
+  const [inputTimeHigh, setInputTimeHigh] = useState(0);
+
+  // output calculation
+  // const [calcWater, setCalcWater] = useState(0);
+  // const [calcTime, setCalcTime] = useState(0);
+  const [instructions, setInstructions] = useState("");
+  const [needsRecalculation, setNeedsRecalculation] = useState(false);
+
+  const onCalculate = () => {
+    setNeedsRecalculation(false);
+    setInstructions(
+      formatInstructions(inputWeight, inputTimeLow, inputTimeHigh)
+    );
+  };
+
+  const onSetInputWeight = (weight: number) => {
+    if (instructions.length) {
+      setNeedsRecalculation(true);
+    }
+
+    setInputWeight(weight);
+  };
+
+  const onSetInputTimeLow = (low: number) => {
+    if (instructions.length) {
+      setNeedsRecalculation(true);
+    }
+
+    setInputTimeLow(low);
+  };
+
+  const onSetInputTimeHigh = (high: number) => {
+    if (instructions.length) {
+      setNeedsRecalculation(true);
+    }
+
+    setInputTimeHigh(high);
+  };
 
   return (
     <ParallaxScrollView
       headerImage={
         <Image
-          source={require("@/assets/images/derek-story-j5k9SOaI_V8-unsplash.jpg")}
-          style={styles.image}
+          alt="Image"
+          size="2xl"
+          resizeMode="cover"
+          source={require("@/assets/images/water_boiling.png")}
+          className="w-full"
         />
       }
+      className="bg-sky-50"
     >
-      <Pressable onPress={() => setWeightVisible(true)}>
-        <Text className="text-lg">Weight</Text>
-      </Pressable>
-      <Pressable onPress={() => setTimeVisible(true)} className="bg-primary-50">
-        <Text>Time</Text>
-      </Pressable>
+      <Heading className="mb-2 text-typography-950">
+        {"Let's Get Started"}
+      </Heading>
 
-      <InputModal
-        visible={timeVisible}
-        setVisible={setTimeVisible}
-        number={time}
-        setNumber={setTime}
-        heading="Cook Time"
-        body="Set the cook time from the package of the pasta"
+      <Text>1 - Enter the weight in onces of pasta you want to cook</Text>
+      <Button
+        size="md"
+        variant="outline"
+        action="primary"
+        onPress={() => setInputWeightVisible(true)}
+        className="bg-white"
+      >
+        <ButtonText>{`${inputWeight} oz`}</ButtonText>
+      </Button>
+
+      <Text>2 - Enter cooking time from the packaging.</Text>
+      <Button
+        size="md"
+        variant="outline"
+        action="primary"
+        onPress={() => setInputTimeVisible(true)}
+        className="bg-white"
+      >
+        <ButtonText>{formatInputTime(inputTimeLow, inputTimeHigh)}</ButtonText>
+      </Button>
+
+      <Text>3 - Now Calculate</Text>
+      <Button
+        action={needsRecalculation ? "negative" : "primary"}
+        onPress={() => onCalculate()}
+      >
+        <ButtonText>
+          {needsRecalculation ? "Recalculate" : "Calculate"}
+        </ButtonText>
+      </Button>
+
+      {instructions && (
+        <View>
+          <Text>{instructions}</Text>
+        </View>
+      )}
+
+      <TimeModal
+        visible={inputTimeVisible}
+        setVisible={setInputTimeVisible}
+        inputTimeLow={inputTimeLow}
+        setInputTimeLow={onSetInputTimeLow}
+        inputTimeHigh={inputTimeHigh}
+        setInputTimeHigh={onSetInputTimeHigh}
       />
-
-      <InputModal
-        visible={weightVisible}
-        setVisible={setWeightVisible}
-        number={weight}
-        setNumber={setWeight}
-        heading="Pasta weight"
-        body="Set the weight in oz of the pasta you want to cook"
+      <WeightModal
+        visible={inputWeightVisible}
+        setVisible={setInputWeightVisible}
+        inputWeight={inputWeight}
+        setInputWeight={onSetInputWeight}
       />
     </ParallaxScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  image: {
-    height: 300,
-    width: "100%",
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-  },
-  inputHeader: {
-    fontWeight: 600,
-    fontSize: 22,
-    paddingBottom: 20,
-  },
-  inputText: {
-    fontSize: 18,
-    paddingBottom: 20,
-  },
-});

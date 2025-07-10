@@ -3,11 +3,50 @@
  *
  * @export
  * @param {number} weight
- * @returns {*}
+ * @returns {string}
  */
-export function calculateWater(weight: number) {
+export function calculateWater(weight: number): number {
   const waterPerOz = 0.25;
   const water = weight * waterPerOz;
+
+  return water;
+}
+
+/**
+ * Calculate the cooking time
+ *
+ * @export
+ * @param {number} low
+ * @param {(number | null)} high
+ * @returns {number}
+ */
+export function calculateTime(low: number, high?: number): number {
+  let calculationNumber = 0;
+
+  if (high) {
+    calculationNumber = low % 2 === 0 ? low : low + 1;
+  } else {
+    calculationNumber = low % 2 === 0 ? low : low - 1;
+  }
+
+  const calculated = calculationNumber / 2 - 2;
+
+  return calculated >= 0 ? calculated : -1;
+}
+
+export function formatInputTime(low: number, high: number) {
+  let returnString = low.toString();
+
+  if (high > 0) {
+    returnString += ` - ${high.toString()} minutes`;
+  } else {
+    return (returnString += low > 0 ? " minutes" : " minute");
+  }
+
+  return returnString;
+}
+
+export function formatWater(water: number): string {
   let returnValue = "";
 
   const whole = Math.trunc(water);
@@ -41,24 +80,14 @@ export function calculateWater(weight: number) {
   return returnValue.trim();
 }
 
-/**
- * Calculate the cooking time
- *
- * @export
- * @param {number} low
- * @param {(number | null)} high
- * @returns {number}
- */
-export function calculateTime(low: number, high: number | null) {
-  let calculationNumber = 0;
+export function formatInstructions(
+  water: number,
+  timeLow: number,
+  timeHigh: number
+) {
+  const calculatedWater = calculateWater(water);
+  const calculatedTime = calculateTime(timeLow, timeHigh);
+  const formattedWater = formatWater(calculatedWater);
 
-  if (high) {
-    calculationNumber = low % 2 === 0 ? low : low + 1;
-  } else {
-    calculationNumber = low % 2 === 0 ? low : low - 1;
-  }
-
-  const calculated = calculationNumber / 2 - 2;
-
-  return calculated >= 0 ? calculated : -1;
+  return `Use ${formattedWater} water. Set pressure cooker to ${calculatedTime} ${calculatedTime > 1 ? "minutes" : "minute"}`;
 }
