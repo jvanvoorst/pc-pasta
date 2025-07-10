@@ -20,8 +20,6 @@ export default function Home() {
   const [inputTimeHigh, setInputTimeHigh] = useState(0);
 
   // output calculation
-  // const [calcWater, setCalcWater] = useState(0);
-  // const [calcTime, setCalcTime] = useState(0);
   const [instructions, setInstructions] = useState("");
   const [needsRecalculation, setNeedsRecalculation] = useState(false);
 
@@ -45,12 +43,22 @@ export default function Home() {
       setNeedsRecalculation(true);
     }
 
+    // high should be equal to or greater than low
+    if (inputTimeHigh < low) {
+      setInputTimeHigh(low);
+    }
+
     setInputTimeLow(low);
   };
 
   const onSetInputTimeHigh = (high: number) => {
     if (instructions.length) {
       setNeedsRecalculation(true);
+    }
+
+    // low should be less than or equal to high
+    if (inputTimeLow > high) {
+      setInputTimeLow(high);
     }
 
     setInputTimeHigh(high);
@@ -69,62 +77,67 @@ export default function Home() {
       }
       className="bg-sky-50"
     >
-      <Heading className="mb-2 text-typography-950">
-        {"Let's Get Started"}
-      </Heading>
+      <View className="p-5">
+        <Heading className="mb-4 text-typography-950">
+          {"Let's Get Started"}
+        </Heading>
 
-      <Text>1 - Enter the weight in onces of pasta you want to cook</Text>
-      <Button
-        size="md"
-        variant="outline"
-        action="primary"
-        onPress={() => setInputWeightVisible(true)}
-        className="bg-white"
-      >
-        <ButtonText>{`${inputWeight} oz`}</ButtonText>
-      </Button>
+        <Text>1 - Enter the weight in onces of pasta you want to cook</Text>
+        <Button
+          size="md"
+          variant="outline"
+          action="primary"
+          onPress={() => setInputWeightVisible(true)}
+          className="bg-white mt-4 mb-6"
+        >
+          <ButtonText>{`${inputWeight} oz`}</ButtonText>
+        </Button>
 
-      <Text>2 - Enter cooking time from the packaging.</Text>
-      <Button
-        size="md"
-        variant="outline"
-        action="primary"
-        onPress={() => setInputTimeVisible(true)}
-        className="bg-white"
-      >
-        <ButtonText>{formatInputTime(inputTimeLow, inputTimeHigh)}</ButtonText>
-      </Button>
+        <Text>2 - Enter cooking time from the packaging.</Text>
+        <Button
+          size="md"
+          variant="outline"
+          action="primary"
+          onPress={() => setInputTimeVisible(true)}
+          className="bg-white mt-4 mb-6"
+        >
+          <ButtonText>
+            {formatInputTime(inputTimeLow, inputTimeHigh)}
+          </ButtonText>
+        </Button>
 
-      <Text>3 - Now Calculate</Text>
-      <Button
-        action={needsRecalculation ? "negative" : "primary"}
-        onPress={() => onCalculate()}
-      >
-        <ButtonText>
-          {needsRecalculation ? "Recalculate" : "Calculate"}
-        </ButtonText>
-      </Button>
+        <Text>3 - Now Calculate</Text>
+        <Button
+          action={needsRecalculation ? "negative" : "primary"}
+          onPress={() => onCalculate()}
+          className="mt-4 mb-6"
+        >
+          <ButtonText>
+            {needsRecalculation ? "Recalculate" : "Calculate"}
+          </ButtonText>
+        </Button>
 
-      {instructions && (
-        <View>
-          <Text>{instructions}</Text>
-        </View>
-      )}
+        {instructions && (
+          <View>
+            <Text>{instructions}</Text>
+          </View>
+        )}
 
-      <TimeModal
-        visible={inputTimeVisible}
-        setVisible={setInputTimeVisible}
-        inputTimeLow={inputTimeLow}
-        setInputTimeLow={onSetInputTimeLow}
-        inputTimeHigh={inputTimeHigh}
-        setInputTimeHigh={onSetInputTimeHigh}
-      />
-      <WeightModal
-        visible={inputWeightVisible}
-        setVisible={setInputWeightVisible}
-        inputWeight={inputWeight}
-        setInputWeight={onSetInputWeight}
-      />
+        <TimeModal
+          visible={inputTimeVisible}
+          setVisible={setInputTimeVisible}
+          inputTimeLow={inputTimeLow}
+          setInputTimeLow={onSetInputTimeLow}
+          inputTimeHigh={inputTimeHigh}
+          setInputTimeHigh={onSetInputTimeHigh}
+        />
+        <WeightModal
+          visible={inputWeightVisible}
+          setVisible={setInputWeightVisible}
+          inputWeight={inputWeight}
+          setInputWeight={onSetInputWeight}
+        />
+      </View>
     </ParallaxScrollView>
   );
 }

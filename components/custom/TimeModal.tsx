@@ -49,16 +49,23 @@ export default function TimeModal({
         onPress={() => setRange(!range)}
         className="justify-start mb-8"
       >
-        <ButtonText>{range ? "Single" : "Range"}</ButtonText>
+        <ButtonText className="text-info-600">
+          {range ? "Single" : "Range"}
+        </ButtonText>
       </Button>
 
       <NumberPicker
         number={inputTimeLow}
         setNumber={setInputTimeLow}
+        label="Low"
         className="mb-4"
       />
       {range && (
-        <NumberPicker number={inputTimeHigh} setNumber={setInputTimeHigh} />
+        <NumberPicker
+          number={inputTimeHigh}
+          setNumber={setInputTimeHigh}
+          label="High"
+        />
       )}
     </InputModal>
   );
