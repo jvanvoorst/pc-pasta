@@ -17,6 +17,7 @@ type Props = PropsWithChildren<{
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
   header: string;
+  onSet: () => void;
 }>;
 
 export default function InputModal({
@@ -24,6 +25,7 @@ export default function InputModal({
   setVisible,
   header,
   children,
+  onSet,
 }: Props) {
   return (
     <Modal isOpen={visible} onClose={() => setVisible(false)} useRNModal>
@@ -35,7 +37,7 @@ export default function InputModal({
             <Icon
               as={X}
               size="md"
-              // className="stroke-background-400 group-[:hover]/modal-close-button:stroke-background-700 group-[:active]/modal-close-button:stroke-background-900 group-[:focus-visible]/modal-close-button:stroke-background-900"
+              className="stroke-background-400 group-[:hover]/modal-close-button:stroke-background-700 group-[:active]/modal-close-button:stroke-background-900 group-[:focus-visible]/modal-close-button:stroke-background-900"
             />
           </ModalCloseButton>
         </ModalHeader>
@@ -46,7 +48,10 @@ export default function InputModal({
             action="primary"
             variant="solid"
             className="w-full"
-            onPress={() => setVisible(false)}
+            onPress={() => {
+              setVisible(false);
+              onSet();
+            }}
           >
             <ButtonText>Set</ButtonText>
           </Button>

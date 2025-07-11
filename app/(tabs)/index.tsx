@@ -6,6 +6,7 @@ import { Image } from "@/components/ui/image";
 import ParallaxScrollView from "@/components/ui/parallax/ParallaxScrollView";
 import "@/css/global.css";
 import { formatInputTime, formatInstructions } from "@/scripts/calculations";
+import { validateForm } from "@/scripts/validations";
 import { useState } from "react";
 import { Text, View } from "react-native";
 
@@ -23,11 +24,21 @@ export default function Home() {
   const [instructions, setInstructions] = useState("");
   const [needsRecalculation, setNeedsRecalculation] = useState(false);
 
+  // errors
+  const [error, setError] = useState({ weight: "", time: "" });
+
   const onCalculate = () => {
     setNeedsRecalculation(false);
-    setInstructions(
-      formatInstructions(inputWeight, inputTimeLow, inputTimeHigh)
-    );
+
+    const validation = validateForm(inputWeight, inputTimeLow);
+
+    if (validation.success) {
+      setInstructions(
+        formatInstructions(inputWeight, inputTimeLow, inputTimeHigh)
+      );
+    } else {
+      setError(validation.error);
+    }
   };
 
   const onSetInputWeight = (weight: number) => {
@@ -36,6 +47,7 @@ export default function Home() {
     }
 
     setInputWeight(weight);
+    setError({ ...error, weight: "" });
   };
 
   const onSetInputTimeLow = (low: number) => {
@@ -44,11 +56,12 @@ export default function Home() {
     }
 
     // high should be equal to or greater than low
-    if (inputTimeHigh < low) {
-      setInputTimeHigh(low);
-    }
+    // if (inputTimeHigh < low) {
+    //   setInputTimeHigh(low);
+    // }
 
     setInputTimeLow(low);
+    setError({ ...error, time: "" });
   };
 
   const onSetInputTimeHigh = (high: number) => {
@@ -57,9 +70,9 @@ export default function Home() {
     }
 
     // low should be less than or equal to high
-    if (inputTimeLow > high) {
-      setInputTimeLow(high);
-    }
+    // if (inputTimeLow > high) {
+    //   setInputTimeLow(high);
+    // }
 
     setInputTimeHigh(high);
   };
@@ -88,10 +101,11 @@ export default function Home() {
           variant="outline"
           action="primary"
           onPress={() => setInputWeightVisible(true)}
-          className="bg-white mt-4 mb-6"
+          className="bg-white mt-4"
         >
           <ButtonText>{`${inputWeight} oz`}</ButtonText>
         </Button>
+        <Text className="text-error-900 mb-2">{error.weight}</Text>
 
         <Text>2 - Enter cooking time from the packaging.</Text>
         <Button
@@ -99,12 +113,13 @@ export default function Home() {
           variant="outline"
           action="primary"
           onPress={() => setInputTimeVisible(true)}
-          className="bg-white mt-4 mb-6"
+          className="bg-white mt-4"
         >
           <ButtonText>
             {formatInputTime(inputTimeLow, inputTimeHigh)}
           </ButtonText>
         </Button>
+        <Text className="text-error-900 mb-2">{error.weight}</Text>
 
         <Text>3 - Now Calculate</Text>
         <Button
