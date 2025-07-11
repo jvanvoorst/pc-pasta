@@ -5,7 +5,7 @@ import { Heading } from "@/components/ui/heading";
 import { Image } from "@/components/ui/image";
 import ParallaxScrollView from "@/components/ui/parallax/ParallaxScrollView";
 import "@/css/global.css";
-import { formatInputTime, formatInstructions } from "@/scripts/calculations";
+import { formatInstructions, formatTime } from "@/scripts/calculations";
 import { validateForm } from "@/scripts/validations";
 import { useState } from "react";
 import { Text, View } from "react-native";
@@ -115,9 +115,7 @@ export default function Home() {
           onPress={() => setInputTimeVisible(true)}
           className="bg-white mt-4"
         >
-          <ButtonText>
-            {formatInputTime(inputTimeLow, inputTimeHigh)}
-          </ButtonText>
+          <ButtonText>{formatTime(inputTimeLow, inputTimeHigh)}</ButtonText>
         </Button>
         <Text className="text-error-900 mb-2">{error.weight}</Text>
 
