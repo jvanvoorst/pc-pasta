@@ -113,28 +113,28 @@ describe("formatInstructions function", () => {
 
   it("should return correct object when input is (8, 4, 6)", () => {
     expect(formatInstructions(8, 4, 6)).toEqual({
-      instructions: "Use 2 cups water. Set pressure cooker to 0 minutes",
+      text: "Use 2 cups water. Set pressure cooker to 0 minutes",
       note: zeroNote,
       warning: null,
     });
   });
   it("should return correct string when input is (16, 8, 10)", () => {
     expect(formatInstructions(16, 8, 10)).toEqual({
-      instructions: "Use 4 cups water. Set pressure cooker to 2 minutes",
+      text: "Use 4 cups water. Set pressure cooker to 2 minutes",
       note: null,
       warning: null,
     });
   });
   it("should return correct string when input is (16, 10, 0)", () => {
     expect(formatInstructions(16, 10, 0)).toEqual({
-      instructions: "Use 4 cups water. Set pressure cooker to 3 minutes",
+      text: "Use 4 cups water. Set pressure cooker to 3 minutes",
       note: null,
       warning: null,
     });
   });
   it("should return correct string when input is (16, 2, 0)", () => {
     expect(formatInstructions(16, 2, 0)).toEqual({
-      instructions: "Use 4 cups water. Set pressure cooker to 0 minutes",
+      text: "Use 4 cups water. Set pressure cooker to 0 minutes",
       note: zeroNote,
       warning: negNumberWarning,
     });

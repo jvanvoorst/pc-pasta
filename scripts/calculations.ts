@@ -1,4 +1,5 @@
 import { negNumberWarning, zeroNote } from "@/constants/constants";
+import type { FormatInstructionsReturnValue } from "@/types/types";
 
 // Calculate the amount of water needed
 export function calculateWater(weight: number): number {
@@ -71,24 +72,18 @@ export function formatWater(water: number): string {
   return returnValue.trim();
 }
 
-type FormatInstructionsReturnValue = {
-  instructions: string;
-  warning: string | null;
-  note: string | null;
-};
-
 // format the output from calculateTime and calculateWater into the instructions string
 export function formatInstructions(
   weight: number,
   timeLow: number,
   timeHigh: number
-): FormatInstructionsReturnValue {
+) {
   const calculatedWater = calculateWater(weight);
   let calculatedTime = calculateTime(timeLow, timeHigh);
   const formattedWater = formatWater(calculatedWater);
 
   let returnValue: FormatInstructionsReturnValue = {
-    instructions: "",
+    text: null,
     warning: null,
     note: null,
   };
@@ -103,7 +98,7 @@ export function formatInstructions(
     returnValue.note = zeroNote;
   }
 
-  returnValue.instructions = `Use ${formattedWater} water. Set pressure cooker to ${calculatedTime} ${calculatedTime === 1 ? "minute" : "minutes"}`;
+  returnValue.text = `Use ${formattedWater} water. Set pressure cooker to ${calculatedTime} ${calculatedTime === 1 ? "minute" : "minutes"}`;
 
   return returnValue;
 }

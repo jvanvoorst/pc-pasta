@@ -15,7 +15,7 @@ export default function NumberPicker({
   className,
   label,
 }: Props) {
-  // number should not go below 0
+  // number should not go below 1
   const deprecateNumber = () => (number > 0 ? number - 1 : number);
 
   return (

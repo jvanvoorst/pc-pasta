@@ -5,3 +5,5 @@ export const zeroNote =
   "You can with most pressure cookers set 0 minutes of cook time. This just means it will come up to pressure and then stop";
 
 export const formErrorZero = "must be greater than 0";
+
+export const formErrorLessThan = "must be greater than Low";

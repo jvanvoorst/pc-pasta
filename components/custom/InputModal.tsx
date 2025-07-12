@@ -49,7 +49,6 @@ export default function InputModal({
             variant="solid"
             className="w-full"
             onPress={() => {
-              setVisible(false);
               onSet();
             }}
           >

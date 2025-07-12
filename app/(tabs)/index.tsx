@@ -7,6 +7,7 @@ import ParallaxScrollView from "@/components/ui/parallax/ParallaxScrollView";
 import "@/css/global.css";
 import { formatInstructions, formatTime } from "@/scripts/calculations";
 import { validateForm } from "@/scripts/validations";
+import type { FormatInstructionsReturnValue } from "@/types/types";
 import { useState } from "react";
 import { Text, View } from "react-native";
 
@@ -21,7 +22,12 @@ export default function Home() {
   const [inputTimeHigh, setInputTimeHigh] = useState(0);
 
   // output calculation
-  const [instructions, setInstructions] = useState("");
+  const [instructions, setInstructions] =
+    useState<FormatInstructionsReturnValue>({
+      text: null,
+      note: null,
+      warning: null,
+    });
   const [needsRecalculation, setNeedsRecalculation] = useState(false);
 
   // errors
@@ -42,38 +48,25 @@ export default function Home() {
   };
 
   const onSetInputWeight = (weight: number) => {
-    if (instructions.length) {
+    if (instructions.text) {
       setNeedsRecalculation(true);
     }
-
     setInputWeight(weight);
     setError({ ...error, weight: "" });
   };
 
   const onSetInputTimeLow = (low: number) => {
-    if (instructions.length) {
+    if (instructions.text) {
       setNeedsRecalculation(true);
     }
-
-    // high should be equal to or greater than low
-    // if (inputTimeHigh < low) {
-    //   setInputTimeHigh(low);
-    // }
-
     setInputTimeLow(low);
     setError({ ...error, time: "" });
   };
 
   const onSetInputTimeHigh = (high: number) => {
-    if (instructions.length) {
+    if (instructions.text) {
       setNeedsRecalculation(true);
     }
-
-    // low should be less than or equal to high
-    // if (inputTimeLow > high) {
-    //   setInputTimeLow(high);
-    // }
-
     setInputTimeHigh(high);
   };
 
@@ -130,9 +123,17 @@ export default function Home() {
           </ButtonText>
         </Button>
 
-        {instructions && (
+        {instructions.text && (
           <View>
-            <Text>{instructions}</Text>
+            <Text>{instructions.text}</Text>
+            {instructions.warning && (
+              <Text className="text-warning-500 mt-2">
+                {instructions.warning}
+              </Text>
+            )}
+            {instructions.note && (
+              <Text className="text-info-700 mt-2">{instructions.note}</Text>
+            )}
           </View>
         )}
 
