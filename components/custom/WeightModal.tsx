@@ -1,3 +1,5 @@
+import { validateWeightForm } from "@/scripts/validations";
+import { WeightFormError } from "@/types/types";
 import {
   Dispatch,
   PropsWithChildren,
@@ -23,15 +25,31 @@ export default function WeightModal({
   setInputWeight,
 }: Props) {
   const [weight, setWeight] = useState(inputWeight);
+  const [error, setError] = useState<WeightFormError>(null);
 
   useEffect(() => {
     if (visible) {
       setWeight(inputWeight);
+      setError(null);
     }
   }, [visible, inputWeight]);
 
+  const onSetWeight = (weight: number) => {
+    if (weight > 0) {
+      setError(null);
+    }
+    setWeight(weight);
+  };
+
   const onSet = () => {
-    setInputWeight(weight);
+    const validation = validateWeightForm(weight);
+
+    if (validation.valid) {
+      setInputWeight(weight);
+      setVisible(false);
+    } else {
+      setError(validation.error);
+    }
   };
 
   return (
@@ -45,7 +63,12 @@ export default function WeightModal({
         Set the weight in onces for the amount of pasta you are cooking. This
         will determine the amount of water to use.
       </Text>
-      <NumberPicker number={weight} setNumber={setWeight} />
+      <NumberPicker
+        number={weight}
+        setNumber={onSetWeight}
+        label="Oz"
+        error={error}
+      />
     </InputModal>
   );
 }

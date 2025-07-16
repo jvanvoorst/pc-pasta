@@ -7,6 +7,7 @@ type Props = {
   setNumber: (number: number) => void;
   className?: string;
   label?: string;
+  error: string | null;
 };
 
 export default function NumberPicker({
@@ -14,13 +15,17 @@ export default function NumberPicker({
   setNumber,
   className,
   label,
+  error,
 }: Props) {
   // number should not go below 1
   const deprecateNumber = () => (number > 0 ? number - 1 : number);
 
   return (
     <View>
-      <Text className="mb-2">{label}</Text>
+      <View className="flex-row justify-between">
+        <Text className="mb-2">{label}</Text>
+        <Text className="text-error-500">{error}</Text>
+      </View>
       <View
         className={`flex-row border-2 rounded-md h-[50] items-center ${className}`}
       >

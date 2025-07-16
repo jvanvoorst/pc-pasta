@@ -1,5 +1,5 @@
 import { formErrorLessThan, formErrorZero } from "@/constants/constants";
-import { TimeFormValidation } from "@/types/types";
+import { TimeFormValidation, WeightFormValidation } from "@/types/types";
 
 export function validateForm(weight: number, time: number) {
   let validation = { success: true, error: { weight: "", time: "" } };
@@ -16,10 +16,10 @@ export function validateForm(weight: number, time: number) {
   return validation;
 }
 
-export function validateTimeForm(low: number, high: number) {
+export function validateTimeForm(low: number, high: number, range: boolean) {
   let validation: TimeFormValidation = {
     valid: true,
-    error: { low: null, high: [] },
+    error: { low: null, high: null },
   };
 
   if (low < 1) {
@@ -27,14 +27,28 @@ export function validateTimeForm(low: number, high: number) {
     validation.error.low = formErrorZero;
   }
 
-  if (high < 1) {
-    validation.valid = false;
-    validation.error.high.push(formErrorZero);
+  if (range) {
+    if (high < 1) {
+      validation.valid = false;
+      validation.error.high = formErrorZero;
+    } else if (high <= low) {
+      validation.valid = false;
+      validation.error.high = formErrorLessThan;
+    }
   }
 
-  if (high <= low) {
+  return validation;
+}
+
+export function validateWeightForm(weight: number) {
+  let validation: WeightFormValidation = {
+    valid: true,
+    error: null,
+  };
+
+  if (weight < 1) {
     validation.valid = false;
-    validation.error.high.push(formErrorLessThan);
+    validation.error = formErrorZero;
   }
 
   return validation;

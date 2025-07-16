@@ -6,10 +6,17 @@ export type FormatInstructionsReturnValue = {
 
 export type TimeFormError = {
   low: string | null;
-  high: string[];
+  high: string | null;
 };
 
 export type TimeFormValidation = {
   valid: boolean;
   error: TimeFormError;
+};
+
+export type WeightFormError = string | null;
+
+export type WeightFormValidation = {
+  valid: boolean;
+  error: WeightFormError;
 };

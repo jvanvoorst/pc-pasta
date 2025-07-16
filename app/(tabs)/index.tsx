@@ -110,7 +110,7 @@ export default function Home() {
         >
           <ButtonText>{formatTime(inputTimeLow, inputTimeHigh)}</ButtonText>
         </Button>
-        <Text className="text-error-900 mb-2">{error.weight}</Text>
+        <Text className="text-error-900 mb-2">{error.time}</Text>
 
         <Text>3 - Now Calculate</Text>
         <Button

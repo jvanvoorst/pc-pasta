@@ -7,7 +7,7 @@ import {
   type PropsWithChildren,
   type SetStateAction,
 } from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { Button, ButtonText } from "../ui/button";
 import InputModal from "./InputModal";
 import NumberPicker from "./NumberPicker";
@@ -32,14 +32,14 @@ export default function TimeModal({
   const [range, setRange] = useState(true);
   const [timeLow, setTimeLow] = useState(inputTimeLow);
   const [timeHigh, setTimeHigh] = useState(inputTimeHigh);
-  const [error, setError] = useState<TimeFormError>({ low: "", high: [] });
+  const [error, setError] = useState<TimeFormError>({ low: null, high: null });
 
   // when modal is re-opened it should always reset to inputTime
   useEffect(() => {
     if (visible) {
       setTimeLow(inputTimeLow);
       setTimeHigh(inputTimeHigh);
-      setError({ low: "", high: [] });
+      setError({ low: null, high: null });
     }
   }, [visible, inputTimeHigh, inputTimeLow]);
 
@@ -50,10 +50,29 @@ export default function TimeModal({
     setVisible(false);
   };
 
+  const onSetTimeLow = (time: number) => {
+    if (time > 0) {
+      setError({ ...error, low: null });
+    }
+
+    setTimeLow(time);
+  };
+
+  const onSetTimeHigh = (time: number) => {
+    if (time > 0) {
+      setError({ ...error, high: null });
+    }
+
+    setTimeHigh(time);
+  };
+
   const onSet = () => {
-    const validation = validateTimeForm(timeLow, timeHigh);
+    const validation = validateTimeForm(timeLow, timeHigh, range);
 
     if (validation.valid) {
+      if (!range) {
+        setTimeHigh(0);
+      }
       setInputTimeLow(timeLow);
       setInputTimeHigh(timeHigh);
       onSetVisible();
@@ -85,21 +104,21 @@ export default function TimeModal({
         </ButtonText>
       </Button>
 
-      <NumberPicker number={timeLow} setNumber={setTimeLow} label="Low" />
-      <Text className="text-error-500">{error.low}</Text>
+      <NumberPicker
+        number={timeLow}
+        setNumber={onSetTimeLow}
+        label="Low"
+        error={error.low}
+      />
       {range && (
-        <>
+        <View className="mt-2">
           <NumberPicker
             number={timeHigh}
-            setNumber={setTimeHigh}
+            setNumber={onSetTimeHigh}
             label="High"
+            error={error.high}
           />
-          {error.high.map((item) => (
-            <Text key={item} className="text-error-500">
-              {item}
-            </Text>
-          ))}
-        </>
+        </View>
       )}
     </InputModal>
   );
