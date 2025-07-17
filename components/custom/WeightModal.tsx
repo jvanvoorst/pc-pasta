@@ -14,7 +14,7 @@ import NumberPicker from "./NumberPicker";
 type Props = PropsWithChildren<{
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
-  inputWeight: number;
+  inputWeight: number | null;
   setInputWeight: (weight: number) => void;
 }>;
 
@@ -24,7 +24,7 @@ export default function WeightModal({
   inputWeight,
   setInputWeight,
 }: Props) {
-  const [weight, setWeight] = useState(inputWeight);
+  const [weight, setWeight] = useState<number | null>(inputWeight);
   const [error, setError] = useState<WeightFormError>(null);
 
   useEffect(() => {
@@ -34,21 +34,21 @@ export default function WeightModal({
     }
   }, [visible, inputWeight]);
 
-  const onSetWeight = (weight: number) => {
-    if (weight > 0) {
-      setError(null);
-    }
+  const onSetWeight = (weight: number | null) => {
+    if (weight) setError(null);
     setWeight(weight);
   };
 
   const onSet = () => {
-    const validation = validateWeightForm(weight);
+    if (weight !== null) {
+      const validation = validateWeightForm(weight);
 
-    if (validation.valid) {
-      setInputWeight(weight);
-      setVisible(false);
-    } else {
-      setError(validation.error);
+      if (validation.valid) {
+        setInputWeight(weight);
+        setVisible(false);
+      } else {
+        setError(validation.error);
+      }
     }
   };
 

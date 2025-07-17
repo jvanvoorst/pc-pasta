@@ -28,7 +28,12 @@ export default function InputModal({
   onSet,
 }: Props) {
   return (
-    <Modal isOpen={visible} onClose={() => setVisible(false)} useRNModal>
+    <Modal
+      isOpen={visible}
+      onClose={() => setVisible(false)}
+      useRNModal
+      avoidKeyboard
+    >
       <ModalBackdrop />
       <ModalContent className="bg-white">
         <ModalHeader>

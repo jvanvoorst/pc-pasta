@@ -30,8 +30,8 @@ export default function TimeModal({
   setInputTimeHigh,
 }: Props) {
   const [range, setRange] = useState(true);
-  const [timeLow, setTimeLow] = useState(inputTimeLow);
-  const [timeHigh, setTimeHigh] = useState(inputTimeHigh);
+  const [timeLow, setTimeLow] = useState<number | null>(inputTimeLow);
+  const [timeHigh, setTimeHigh] = useState<number | null>(inputTimeHigh);
   const [error, setError] = useState<TimeFormError>({ low: null, high: null });
 
   // when modal is re-opened it should always reset to inputTime
@@ -50,34 +50,30 @@ export default function TimeModal({
     setVisible(false);
   };
 
-  const onSetTimeLow = (time: number) => {
-    if (time > 0) {
-      setError({ ...error, low: null });
-    }
-
+  const onSetTimeLow = (time: number | null) => {
+    if (time) setError({ ...error, low: null });
     setTimeLow(time);
   };
 
-  const onSetTimeHigh = (time: number) => {
-    if (time > 0) {
-      setError({ ...error, high: null });
-    }
-
+  const onSetTimeHigh = (time: number | null) => {
+    if (time) setError({ ...error, high: null });
     setTimeHigh(time);
   };
 
   const onSet = () => {
-    const validation = validateTimeForm(timeLow, timeHigh, range);
+    if (timeLow !== null && timeHigh !== null) {
+      const validation = validateTimeForm(timeLow, timeHigh, range);
 
-    if (validation.valid) {
-      if (!range) {
-        setTimeHigh(0);
+      if (validation.valid) {
+        if (!range) {
+          setTimeHigh(0);
+        }
+        setInputTimeLow(timeLow);
+        setInputTimeHigh(timeHigh);
+        onSetVisible();
+      } else {
+        setError(validation.error);
       }
-      setInputTimeLow(timeLow);
-      setInputTimeHigh(timeHigh);
-      onSetVisible();
-    } else {
-      setError(validation.error);
     }
   };
 
