@@ -18,6 +18,7 @@ type Props = PropsWithChildren<{
   setVisible: Dispatch<SetStateAction<boolean>>;
   header: string;
   onSet: () => void;
+  buttonDisabled: boolean;
 }>;
 
 export default function InputModal({
@@ -26,6 +27,7 @@ export default function InputModal({
   header,
   children,
   onSet,
+  buttonDisabled,
 }: Props) {
   return (
     <Modal
@@ -56,6 +58,7 @@ export default function InputModal({
             onPress={() => {
               onSet();
             }}
+            isDisabled={buttonDisabled}
           >
             <ButtonText>Set</ButtonText>
           </Button>

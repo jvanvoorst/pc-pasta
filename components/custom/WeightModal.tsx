@@ -26,6 +26,7 @@ export default function WeightModal({
 }: Props) {
   const [weight, setWeight] = useState<number | null>(inputWeight);
   const [error, setError] = useState<WeightFormError>(null);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   useEffect(() => {
     if (visible) {
@@ -54,6 +55,7 @@ export default function WeightModal({
 
   return (
     <InputModal
+      buttonDisabled={buttonDisabled}
       header="Pasta Weight"
       visible={visible}
       setVisible={setVisible}
@@ -68,6 +70,7 @@ export default function WeightModal({
         setNumber={onSetWeight}
         label="Oz"
         error={error}
+        setButtonDisabled={setButtonDisabled}
       />
     </InputModal>
   );

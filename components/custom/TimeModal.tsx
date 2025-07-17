@@ -33,6 +33,7 @@ export default function TimeModal({
   const [timeLow, setTimeLow] = useState<number | null>(inputTimeLow);
   const [timeHigh, setTimeHigh] = useState<number | null>(inputTimeHigh);
   const [error, setError] = useState<TimeFormError>({ low: null, high: null });
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   // when modal is re-opened it should always reset to inputTime
   useEffect(() => {
@@ -79,6 +80,7 @@ export default function TimeModal({
 
   return (
     <InputModal
+      buttonDisabled={buttonDisabled}
       visible={visible}
       setVisible={onSetVisible}
       header="Cook Time"
@@ -105,6 +107,7 @@ export default function TimeModal({
         setNumber={onSetTimeLow}
         label="Low"
         error={error.low}
+        setButtonDisabled={setButtonDisabled}
       />
       {range && (
         <View className="mt-2">
@@ -113,6 +116,7 @@ export default function TimeModal({
             setNumber={onSetTimeHigh}
             label="High"
             error={error.high}
+            setButtonDisabled={setButtonDisabled}
           />
         </View>
       )}

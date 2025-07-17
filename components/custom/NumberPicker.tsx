@@ -1,6 +1,6 @@
 import { Icon } from "@/components/ui/icon";
 import { Minus, Plus } from "lucide-react-native";
-import { useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { Keyboard, Pressable, Text, TextInput, View } from "react-native";
 
 type Props = {
@@ -9,6 +9,7 @@ type Props = {
   className?: string;
   label?: string;
   error: string | null;
+  setButtonDisabled: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function NumberPicker({
@@ -17,6 +18,7 @@ export default function NumberPicker({
   className,
   label,
   error,
+  setButtonDisabled,
 }: Props) {
   // number should not go below 1
   const onDeprecateNumber = () => {
@@ -34,12 +36,17 @@ export default function NumberPicker({
   useEffect(() => {
     const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
       if (number === null) setNumber(0);
+      setButtonDisabled(false);
+    });
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
+      setButtonDisabled(true);
     });
 
     return () => {
       hideSubscription.remove();
+      showSubscription.remove();
     };
-  }, [number, setNumber]);
+  }, [number, setNumber, setButtonDisabled]);
 
   return (
     <View>
