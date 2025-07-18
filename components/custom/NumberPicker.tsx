@@ -55,13 +55,13 @@ export default function NumberPicker({
         <Text className="text-error-500">{error}</Text>
       </View>
       <View
-        className={`flex-row border-2 rounded-md h-[50] items-center ${className}`}
+        className={`flex-row border-2  border-theme-yellow rounded-3xl h-[50] items-center ${className}`}
       >
         <Pressable
           className="flex-[1] items-center justify-center"
           onPress={onDeprecateNumber}
         >
-          <Icon className="h-[30] w-[30] text-info-600" as={Minus} />
+          <Icon className="h-[30] w-[30] text-theme-link" as={Minus} />
         </Pressable>
 
         <View className="flex-[2] items-center">
@@ -80,7 +80,7 @@ export default function NumberPicker({
           className="flex-[1] items-center justify-center"
           onPress={onIncrementNumber}
         >
-          <Icon className="h-[30] w-[30] text-info-600" as={Plus} />
+          <Icon className="h-[30] w-[30] text-theme-link" as={Plus} />
         </Pressable>
       </View>
     </View>

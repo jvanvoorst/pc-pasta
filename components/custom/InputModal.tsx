@@ -37,24 +37,22 @@ export default function InputModal({
       avoidKeyboard
     >
       <ModalBackdrop />
-      <ModalContent className="bg-white">
+      <ModalContent className="bg-white rounded-xl">
         <ModalHeader>
-          <Heading className="mb-2 text-typography-950">{header}</Heading>
+          <Heading size="xl" className="mb-2 text-typography-950">
+            {header}
+          </Heading>
           <ModalCloseButton>
-            <Icon
-              as={X}
-              size="md"
-              className="stroke-background-400 group-[:hover]/modal-close-button:stroke-background-700 group-[:active]/modal-close-button:stroke-background-900 group-[:focus-visible]/modal-close-button:stroke-background-900"
-            />
+            <Icon as={X} size="xl" className="text-theme-link" />
           </ModalCloseButton>
         </ModalHeader>
         <ModalBody>{children}</ModalBody>
-        <ModalFooter className="mt-8">
+        <ModalFooter>
           <Button
             size="lg"
             action="primary"
             variant="solid"
-            className="w-full"
+            className="w-full bg-theme-blue"
             onPress={() => {
               onSet();
             }}

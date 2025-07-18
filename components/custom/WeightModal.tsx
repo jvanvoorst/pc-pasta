@@ -61,7 +61,7 @@ export default function WeightModal({
       setVisible={setVisible}
       onSet={onSet}
     >
-      <Text className="text-typography-500 mb-8">
+      <Text className="text-typography-500 mb-4">
         Set the weight in onces for the amount of pasta you are cooking. This
         will determine the amount of water to use.
       </Text>

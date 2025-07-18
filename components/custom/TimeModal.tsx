@@ -7,8 +7,9 @@ import {
   type PropsWithChildren,
   type SetStateAction,
 } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { Button, ButtonText } from "../ui/button";
+import { Text } from "../ui/text";
 import InputModal from "./InputModal";
 import NumberPicker from "./NumberPicker";
 
@@ -86,7 +87,7 @@ export default function TimeModal({
       header="Cook Time"
       onSet={onSet}
     >
-      <Text className="text-typography-500">
+      <Text className="text-typography-700">
         Find the cooking time from your package. If it is only a single time
         click Single below
       </Text>
@@ -95,9 +96,9 @@ export default function TimeModal({
         variant="link"
         action="primary"
         onPress={() => setRange(!range)}
-        className="justify-start mb-8"
+        className="justify-start mb-4"
       >
-        <ButtonText className="text-info-600">
+        <ButtonText className="text-theme-link">
           {range ? "Single" : "Range"}
         </ButtonText>
       </Button>
@@ -105,7 +106,7 @@ export default function TimeModal({
       <NumberPicker
         number={timeLow}
         setNumber={onSetTimeLow}
-        label="Low"
+        label={range ? "Low" : ""}
         error={error.low}
         setButtonDisabled={setButtonDisabled}
       />

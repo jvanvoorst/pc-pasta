@@ -1,14 +1,15 @@
+import ThemedView from "@/components/custom/ThemedView";
+import { Text } from "@/components/ui/text";
 import { negNumberWarning, zeroNote } from "@/constants/constants";
 import { calculateTime, calculateWater } from "@/scripts/calculations";
 import { formatCookTime, formatWater } from "@/scripts/formatting";
-import { Text, View } from "react-native";
+import { Heading } from "../ui/heading";
 
 type Props = {
   visible: boolean;
   timeLow: number;
   timeHigh: number;
   weight: number | null;
-  className: string;
 };
 
 export default function Instructions({
@@ -16,7 +17,6 @@ export default function Instructions({
   timeLow,
   timeHigh,
   weight,
-  className,
 }: Props) {
   const formattedWater = formatWater(calculateWater(weight));
   const calculatedTime = calculateTime(timeLow, timeHigh);
@@ -25,24 +25,44 @@ export default function Instructions({
   if (!visible) return null;
 
   return (
-    <View className={className}>
-      {calculatedTime === -1 && (
-        <Text className="text-warning-500 mb-2">{negNumberWarning}</Text>
-      )}
-      <Text className="mb-3">{`1. Combine the ${weight} oz of pasta and ${formattedWater} water in the pressure cooker and give it a stir`}</Text>
-      <Text className="mb-3">2. Seal and lock the lid</Text>
-      <Text>{`3. Pressure cook on high for ${formattedTime}`}</Text>
-      {calculatedTime <= 0 && (
-        <Text className="text-warning-500">{zeroNote}</Text>
-      )}
-      <Text className="my-3">
-        4. Let naturally release for 5 minutes then manually release the rest
-      </Text>
-      <Text className="mb-3">5. Open lid and stir the pasta thoroughly</Text>
-      <Text className="mb-3">
-        6. Put lid back on and let sit for another 5-10 minutes
-      </Text>
-      <Text>7. Done!</Text>
-    </View>
+    <>
+      <ThemedView>
+        <Heading size="xl">Quick:</Heading>
+        <Text size="lg">{`Water - ${formattedWater}   Time - ${formattedTime}`}</Text>
+        {/* <Text size="lg">{`Time: ${formattedTime}`}</Text> */}
+        {calculatedTime === -1 && (
+          <Text size="lg" className="text-error-300 mb-2">
+            {negNumberWarning}
+          </Text>
+        )}
+      </ThemedView>
+
+      <ThemedView>
+        <Heading size="xl">Full:</Heading>
+        <Text
+          size="lg"
+          className="mb-3"
+        >{`1. Combine the ${weight} oz of pasta and ${formattedWater} water in the pressure cooker and give it a stir`}</Text>
+        <Text size="lg" className="mb-3">
+          2. Seal and lock the lid
+        </Text>
+        <Text size="lg">{`3. Pressure cook on high for ${formattedTime}`}</Text>
+        {calculatedTime <= 0 && (
+          <Text size="lg" className="text-error-300">
+            {zeroNote}
+          </Text>
+        )}
+        <Text size="lg" className="my-3">
+          4. Let naturally release for 5 minutes then manually release the rest
+        </Text>
+        <Text size="lg" className="mb-3">
+          5. Open lid and stir the pasta thoroughly
+        </Text>
+        <Text size="lg" className="mb-3">
+          6. Put lid back on and let sit for another 5-10 minutes
+        </Text>
+        <Text size="lg">7. Done!</Text>
+      </ThemedView>
+    </>
   );
 }

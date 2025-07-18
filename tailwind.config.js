@@ -169,6 +169,11 @@ module.exports = {
           info: "rgb(var(--color-indicator-info)/<alpha-value>)",
           error: "rgb(var(--color-indicator-error)/<alpha-value>)",
         },
+        theme: {
+          yellow: "rgb(var(--color-theme-yellow)/<alpha-value>)",
+          blue: "rgb(var(--color-theme-blue)/<alpha-value>)",
+          link: "rgb(var(--color-theme-link)/<alpha-value>)",
+        },
       },
       fontFamily: {
         heading: undefined,
