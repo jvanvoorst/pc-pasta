@@ -1,4 +1,4 @@
-import ThemedView from "@/components/custom/ThemedView";
+import Tile from "@/components/custom/Tile";
 import { Text } from "@/components/ui/text";
 import { negNumberWarning, zeroNote } from "@/constants/constants";
 import { calculateTime, calculateWater } from "@/scripts/calculations";
@@ -26,18 +26,17 @@ export default function Instructions({
 
   return (
     <>
-      <ThemedView>
+      <Tile>
         <Heading size="xl">Quick:</Heading>
         <Text size="lg">{`Water - ${formattedWater}   Time - ${formattedTime}`}</Text>
-        {/* <Text size="lg">{`Time: ${formattedTime}`}</Text> */}
         {calculatedTime === -1 && (
           <Text size="lg" className="text-error-300 mb-2">
             {negNumberWarning}
           </Text>
         )}
-      </ThemedView>
+      </Tile>
 
-      <ThemedView>
+      <Tile>
         <Heading size="xl">Full:</Heading>
         <Text
           size="lg"
@@ -62,7 +61,7 @@ export default function Instructions({
           6. Put lid back on and let sit for another 5-10 minutes
         </Text>
         <Text size="lg">7. Done!</Text>
-      </ThemedView>
+      </Tile>
     </>
   );
 }

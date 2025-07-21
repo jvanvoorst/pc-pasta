@@ -10,7 +10,7 @@ import "@/css/global.css";
 import { formatTime } from "@/scripts/formatting";
 import { useState } from "react";
 import { View } from "react-native";
-import ThemedView from "../../components/custom/ThemedView";
+import Tile from "../../components/custom/Tile";
 
 export default function Home() {
   // modal visibility
@@ -33,12 +33,11 @@ export default function Home() {
           className="w-full"
         />
       }
-      className="bg-secondary-100"
+      className=" flex-1"
     >
-      <View className="m-6">
-        {/* Get Started */}
-        <ThemedView>
-          <Heading size="2xl" className="mb-4 text-typography-950">
+      <View className="m-6 gap-6">
+        <Tile>
+          <Heading size="2xl" className="text-typography-950">
             {"Let's Get Started"}
           </Heading>
 
@@ -69,7 +68,7 @@ export default function Home() {
               {formatTime(inputTimeLow, inputTimeHigh)}
             </ButtonText>
           </Button>
-        </ThemedView>
+        </Tile>
 
         <Instructions
           visible={!!inputWeight && !!inputTimeLow}
@@ -79,13 +78,14 @@ export default function Home() {
         />
       </View>
 
-      <View className="items-center justify-center">
+      <View className="items-center">
         <Image
           alt="pressure cooker"
           size="xl"
-          source={require("@/assets/images/pressure-cooker-2.png")}
+          source={require("@/assets/images/pressure-cooker.png")}
         />
       </View>
+
       <TimeModal
         visible={inputTimeVisible}
         setVisible={setInputTimeVisible}
@@ -94,6 +94,7 @@ export default function Home() {
         inputTimeHigh={inputTimeHigh}
         setInputTimeHigh={setInputTimeHigh}
       />
+
       <WeightModal
         visible={inputWeightVisible}
         setVisible={setInputWeightVisible}

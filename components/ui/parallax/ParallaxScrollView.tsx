@@ -13,7 +13,7 @@ const HEADER_HEIGHT = 250;
 
 type Props = PropsWithChildren<{
   headerImage: ReactElement;
-  className: string;
+  className?: string;
 }>;
 
 export default function ParallaxScrollView({
@@ -46,7 +46,7 @@ export default function ParallaxScrollView({
   });
 
   return (
-    <View className={`flex-1 ${className}`}>
+    <View className="flex-1">
       <Animated.ScrollView
         ref={scrollRef}
         scrollEventThrottle={16}
@@ -55,7 +55,7 @@ export default function ParallaxScrollView({
       >
         <Animated.View
           style={headerAnimatedStyle}
-          className={`h-[${HEADER_HEIGHT}] overflow-hidden`}
+          className={`h-[${HEADER_HEIGHT}] overflow-hidden ${className}`}
         >
           {headerImage}
         </Animated.View>
