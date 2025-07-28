@@ -79,6 +79,13 @@ export default function TimeModal({
     }
   };
 
+  const getText = () =>
+    `Find the cooking time from your package. ${
+      range
+        ? "If package only has a single time click single below."
+        : "If packaging has a cook time range click range below."
+    }`;
+
   return (
     <InputModal
       buttonDisabled={buttonDisabled}
@@ -87,9 +94,8 @@ export default function TimeModal({
       header="Cook Time"
       onSet={onSet}
     >
-      <Text className="text-typography-700">
-        Find the cooking time from your package. If it is only a single time
-        click Single below
+      <Text size="lg" className="text-typography-600">
+        {getText()}
       </Text>
       <Button
         size="sm"

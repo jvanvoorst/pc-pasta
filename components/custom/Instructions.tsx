@@ -26,7 +26,7 @@ export default function Instructions({
 
   return (
     <>
-      <Tile>
+      <Tile animate>
         <Heading size="xl">Quick:</Heading>
         <Text size="lg">{`Water - ${formattedWater}   Time - ${formattedTime}`}</Text>
         {calculatedTime === -1 && (
@@ -36,7 +36,7 @@ export default function Instructions({
         )}
       </Tile>
 
-      <Tile>
+      <Tile animate>
         <Heading size="xl">Full:</Heading>
         <Text
           size="lg"

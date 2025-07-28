@@ -1,3 +1,4 @@
+import { Text } from "@/components/ui/text";
 import { validateWeightForm } from "@/scripts/validations";
 import { WeightFormError } from "@/types/types";
 import {
@@ -7,7 +8,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Text } from "react-native";
 import InputModal from "./InputModal";
 import NumberPicker from "./NumberPicker";
 
@@ -61,7 +61,7 @@ export default function WeightModal({
       setVisible={setVisible}
       onSet={onSet}
     >
-      <Text className="text-typography-500 mb-4">
+      <Text size="lg" className="text-typography-600 mb-4">
         Set the weight in onces for the amount of pasta you are cooking. This
         will determine the amount of water to use.
       </Text>

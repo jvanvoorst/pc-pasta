@@ -1,43 +1,44 @@
-import type { PropsWithChildren, ReactElement } from "react";
-import { View } from "react-native";
+import { PropsWithChildren } from "react";
+import { Dimensions, View } from "react-native";
 import Animated, {
+  AnimatedRef,
   interpolate,
-  useAnimatedRef,
   useAnimatedStyle,
   useScrollViewOffset,
 } from "react-native-reanimated";
+import { AnimatedScrollView } from "react-native-reanimated/lib/typescript/component/ScrollView";
 
-import { useBottomTabOverflow } from "@/components/ui/parallax/TabBarBackground";
-
-const HEADER_HEIGHT = 250;
+const { width } = Dimensions.get("window");
+const IMG_HEIGHT = 150;
 
 type Props = PropsWithChildren<{
-  headerImage: ReactElement;
+  img: HTMLImageElement;
   className?: string;
+  scrollRef: AnimatedRef<AnimatedScrollView>;
 }>;
 
 export default function ParallaxScrollView({
   children,
-  headerImage,
+  img,
+  scrollRef,
   className,
 }: Props) {
-  const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
-  const bottom = useBottomTabOverflow();
-  const headerAnimatedStyle = useAnimatedStyle(() => {
+
+  const imageAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
         {
           translateY: interpolate(
             scrollOffset.value,
-            [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
-            [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.75]
+            [-IMG_HEIGHT, 0, IMG_HEIGHT],
+            [-IMG_HEIGHT / 2, 0, IMG_HEIGHT * 0.75]
           ),
         },
         {
           scale: interpolate(
             scrollOffset.value,
-            [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
+            [-IMG_HEIGHT, 0, IMG_HEIGHT],
             [2, 1, 1]
           ),
         },
@@ -46,20 +47,19 @@ export default function ParallaxScrollView({
   });
 
   return (
-    <View className="flex-1">
-      <Animated.ScrollView
-        ref={scrollRef}
-        scrollEventThrottle={16}
-        scrollIndicatorInsets={{ bottom }}
-        contentContainerStyle={{ paddingBottom: bottom }}
-      >
-        <Animated.View
-          style={headerAnimatedStyle}
-          className={`h-[${HEADER_HEIGHT}] overflow-hidden ${className}`}
-        >
-          {headerImage}
-        </Animated.View>
-        <View className="flex-1 overflow-hidden">{children}</View>
+    <View>
+      <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
+        <Animated.Image
+          source={img}
+          style={[
+            {
+              width: width,
+              height: IMG_HEIGHT,
+            },
+            imageAnimatedStyle,
+          ]}
+        />
+        <View className={className}>{children}</View>
       </Animated.ScrollView>
     </View>
   );
