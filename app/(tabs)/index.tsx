@@ -49,7 +49,7 @@ export default function Home() {
         </Heading>
 
         <Text size="lg" className="text-typography-600">
-          Enter the weight in onces of pasta you want to cook
+          Enter weight in onces of pasta you are cooking
         </Text>
         <Button
           size="md"
@@ -69,12 +69,20 @@ export default function Home() {
           variant="outline"
           action="primary"
           onPress={() => setInputTimeVisible(true)}
-          className="bg-white mt-2 rounded-3xl border-theme-yellow border-2"
+          className="bg-white my-2 rounded-3xl border-theme-yellow border-2"
         >
           <ButtonText className="text-theme-link">
             {formatTime(inputTimeLow, inputTimeHigh)}
           </ButtonText>
         </Button>
+
+        {__DEV__ && (
+          <Button size="sm" variant="link" onPress={reset}>
+            <ButtonText action="primary" className="text-theme-link">
+              clear
+            </ButtonText>
+          </Button>
+        )}
       </Tile>
 
       <Instructions
